@@ -5,8 +5,6 @@ import { useState } from 'react';
 import { FlatList, Pressable, Text, View } from 'react-native';
 import { Spacing } from '../../constants';
 
-const emojis = ['🛫', '🍕', '🧠', '🏡', '💊', '🚗'];
-
 const EMOJI_PADDING = Spacing.MD;
 
 const Emoji = ({
@@ -48,9 +46,11 @@ const Emoji = ({
 export function SpendingCategoryInput({
   active,
   setActive,
+  categoriesImages = [],
 }: {
   active: number;
   setActive: (index: number) => void;
+  categoriesImages: string[];
 }) {
   const [parentWidth, setParentWidth] = useState(0);
   const ref = useRef<FlatList>(null);
@@ -77,7 +77,7 @@ export function SpendingCategoryInput({
         horizontal
         ref={ref}
         showsHorizontalScrollIndicator={false}
-        data={emojis}
+        data={categoriesImages}
         keyExtractor={(_, index) => String(index)}
         getItemLayout={(_, index) => ({
           index,
