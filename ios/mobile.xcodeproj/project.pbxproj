@@ -13,7 +13,9 @@
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		1FFDADC02B6AFBF57BCD61B4 /* libPods-mobile-mobileTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C0105FE92D3D04897436B3D /* libPods-mobile-mobileTests.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
+		A4EB972EC0494FE3A7270DAA /* AtkinsonHyperlegible-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 79943D183C7340E4BE18A978 /* AtkinsonHyperlegible-Bold.ttf */; };
 		C11920785372794582783EA6 /* libPods-mobile.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D650CEF4C39D54627BAC554 /* libPods-mobile.a */; };
+		CDDB753DE905484898219B01 /* AtkinsonHyperlegible-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5D697109033145139826F374 /* AtkinsonHyperlegible-Regular.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,6 +38,8 @@
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = mobile/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = mobile/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = mobile/main.m; sourceTree = "<group>"; };
+		5D697109033145139826F374 /* AtkinsonHyperlegible-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "AtkinsonHyperlegible-Regular.ttf"; path = "../src/assets/fonts/AtkinsonHyperlegible-Regular.ttf"; sourceTree = "<group>"; };
+		79943D183C7340E4BE18A978 /* AtkinsonHyperlegible-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "AtkinsonHyperlegible-Bold.ttf"; path = "../src/assets/fonts/AtkinsonHyperlegible-Bold.ttf"; sourceTree = "<group>"; };
 		7D650CEF4C39D54627BAC554 /* libPods-mobile.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-mobile.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = mobile/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8CFFDA6516A80D4FD825C1C0 /* Pods-mobile-mobileTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-mobile-mobileTests.release.xcconfig"; path = "Target Support Files/Pods-mobile-mobileTests/Pods-mobile-mobileTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -134,6 +138,7 @@
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				78343E428150701CC3B82B15 /* Pods */,
+				9758662386C2484D94FB7A81 /* Resources */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -147,6 +152,16 @@
 				00E356EE1AD99517003FC87E /* mobileTests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		9758662386C2484D94FB7A81 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				79943D183C7340E4BE18A978 /* AtkinsonHyperlegible-Bold.ttf */,
+				5D697109033145139826F374 /* AtkinsonHyperlegible-Regular.ttf */,
+			);
+			name = Resources;
+			path = "";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -245,6 +260,8 @@
 			files = (
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
+				A4EB972EC0494FE3A7270DAA /* AtkinsonHyperlegible-Bold.ttf in Resources */,
+				CDDB753DE905484898219B01 /* AtkinsonHyperlegible-Regular.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
