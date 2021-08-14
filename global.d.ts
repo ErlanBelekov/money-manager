@@ -8,6 +8,14 @@ declare interface Spending extends Identifiable {
   price: number;
 }
 
+declare type SpendingCategory =
+  | 'FUN'
+  | 'HOUSE'
+  | 'FOOD'
+  | 'PRODUCTIVITY'
+  | 'TRANSPORTATION'
+  | 'OTHER';
+
 declare interface Theme {
   dark: boolean;
   colors: {
@@ -24,4 +32,7 @@ declare type ThemeColor =
   | 'notification'
   | 'textPrimary'
   | 'textSecondary'
-  | 'grey';
+  | 'error'
+  | 'grey'
+  | 'white'
+  | 'black';
