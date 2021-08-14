@@ -4,8 +4,8 @@ export const darkTheme: Theme = {
   dark: true,
   colors: {
     ...DefaultTheme.colors,
-    background: '#171717',
-    primary: '#78DEC7',
+    background: '#11052C',
+    primary: '#3D087B',
     text: '#fff',
   },
 };
@@ -14,17 +14,26 @@ export const lightTheme: Theme = {
   dark: false,
   colors: {
     ...DefaultTheme.colors,
+    background: '#fff',
+    primary: '#3D087B',
+    text: '#000',
   },
 };
 
 export const extendedDarkThemeColors = {
   textPrimary: '#fff',
-  textSecondary: '#EEEEEE',
+  textSecondary: '#fff',
   grey: '#999ca9',
+  white: '#fff',
+  black: '#000',
+  error: '#FF2626',
 };
 
 export const extendedLightThemeColors = {
   textPrimary: '#000',
   textSecondary: '#000',
   grey: '#999ca9',
+  white: '#fff',
+  black: '#000',
+  error: '#FF2626',
 };
