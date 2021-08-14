@@ -13,7 +13,7 @@ interface InputWithAccessoryProps extends TextInputProps {
 export function InputWithAccessory({
   renderAccessory,
   accessoryText,
-  accessoryFontSize = FontSizes.XL,
+  accessoryFontSize = FontSizes.MD,
   ...textInputProps
 }: InputWithAccessoryProps) {
   const {
