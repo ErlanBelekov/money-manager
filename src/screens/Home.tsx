@@ -1,10 +1,18 @@
 import React from 'react';
-import { View, Pressable, Text } from 'react-native';
-import { useTheme, useNavigation } from '@react-navigation/native';
+import { View, SectionList } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { Header } from '../components/Header';
-import { SpendingsList } from '../components/SpendingsList';
-import { useSpendings } from '../hooks';
+
+import { Button, Header, SpendingSummary } from '../components';
+
+import { useTheme, useExpenses } from '../hooks';
+
+import { FontSizes, Spacing } from '../constants';
+import { Label } from '../ui';
+
+function SpendingsSeparator() {
+  return <View style={{ height: Spacing.LG }} />;
+}
 
 export function HomeScreen() {
   const {
@@ -13,10 +21,39 @@ export function HomeScreen() {
 
   const navigation = useNavigation<NativeStackNavigationProp<any>>();
 
-  const [] = useSpendings();
-
   const onAddPress = () => {
     navigation.push('AddSpending');
+  };
+
+  const { expenses } = useExpenses();
+
+  console.log('current expenses: \n', expenses);
+
+  const testSections = [
+    {
+      title: 'Today',
+      data: expenses,
+    },
+  ];
+
+  const renderSpending = ({ item }: { item: Expense }) => {
+    return (
+      <View
+        style={{
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+        }}>
+        <View>
+          <Label color="textPrimary" fontSize={FontSizes.LG}>
+            {item.name}
+          </Label>
+        </View>
+        <Label color="primary" fontSize={FontSizes.XL}>
+          ${item.amount}
+        </Label>
+      </View>
+    );
   };
 
   return (
@@ -29,21 +66,33 @@ export function HomeScreen() {
         title="Overview"
         renderRightItems={() => {
           return (
-            <Pressable
-              style={{
-                alignItems: 'center',
-                justifyContent: 'center',
-                backgroundColor: 'green',
-                padding: 10,
-                borderRadius: 10,
-              }}
-              onPress={onAddPress}>
-              <Text>Add Spending</Text>
-            </Pressable>
+            <Button rounded labelColor="primary" onPress={onAddPress}>
+              Add Expense
+            </Button>
           );
         }}
       />
-      <SpendingsList />
+      <SectionList
+        sections={testSections}
+        keyExtractor={(item, index) => String(index)}
+        renderSectionHeader={({ section: { title, key } }) => {
+          return (
+            <Label
+              color="textPrimary"
+              fontSize={FontSizes.TWOXL}
+              styles={{
+                marginTop: Number(key) !== 0 ? Spacing.LG : 0,
+                paddingBottom: Spacing.MD,
+              }}>
+              {title}
+            </Label>
+          );
+        }}
+        renderItem={renderSpending}
+        contentContainerStyle={{ paddingHorizontal: 16, paddingBottom: 16 }}
+        ItemSeparatorComponent={SpendingsSeparator}
+        ListHeaderComponent={SpendingSummary}
+      />
     </View>
   );
 }
