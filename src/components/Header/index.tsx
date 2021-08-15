@@ -1,9 +1,14 @@
 import React, { ReactNode } from 'react';
-import { View, Text } from 'react-native';
+import { Image, Pressable, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { FontSizes } from '../../constants';
-import { useTheme } from '../../hooks';
+import { DrawerNavigationProp } from '@react-navigation/drawer';
+import { useNavigation } from '@react-navigation/core';
 
+import { FontSizes, Spacing } from '../../constants';
+import { useTheme } from '../../hooks';
+import { Label } from '../../ui';
+
+import menuIcon from '../../assets/icons/menu.png';
 export interface HeaderProps {
   title: string;
   renderRightItems?: () => ReactNode;
@@ -11,31 +16,41 @@ export interface HeaderProps {
 
 export function Header({ title, renderRightItems }: HeaderProps) {
   const {
-    colors: { background, textPrimary },
+    colors: { background },
   } = useTheme();
 
+  const navigation = useNavigation<DrawerNavigationProp<any>>();
+
   const { top } = useSafeAreaInsets();
+
+  const onMenuPress = () => {
+    navigation.toggleDrawer();
+  };
 
   return (
     <View
       style={{
         backgroundColor: background,
-        paddingTop: top + 16,
+        paddingTop: top + Spacing.SM,
         paddingHorizontal: 16,
-        paddingBottom: 16,
+        paddingBottom: Spacing.XS,
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
       }}>
-      <Text
-        style={{
-          color: textPrimary,
-          fontSize: FontSizes.THREEXL,
-          fontWeight: 'bold',
-          // flex: 1,
-        }}>
+      <Pressable onPress={onMenuPress}>
+        <Image
+          source={menuIcon}
+          style={{ height: FontSizes.THREEXL, width: FontSizes.THREEXL }}
+        />
+      </Pressable>
+      <Label
+        styles={{ marginLeft: Spacing.XS }}
+        color="textPrimary"
+        fontSize={FontSizes.XL}
+        fontWeight="bold">
         {title}
-      </Text>
+      </Label>
       <View
         style={{
           flex: 1,
