@@ -2,10 +2,10 @@ declare interface Identifiable {
   readonly id: string;
 }
 
-declare interface Spending extends Identifiable {
-  title: string;
-  createdAt: Date;
-  price: number;
+declare interface Expense extends Identifiable {
+  readonly name: string;
+  readonly createdAt: Date;
+  readonly amount: number;
 }
 
 declare type SpendingCategory =
@@ -35,4 +35,6 @@ declare type ThemeColor =
   | 'error'
   | 'grey'
   | 'white'
-  | 'black';
+  | 'black'
+  | 'yellow'
+  | 'pink';
