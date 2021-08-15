@@ -1,6 +1,7 @@
 import React, { PropsWithChildren } from 'react';
 import { Field, useField } from 'formik';
 import { Label } from '../../ui';
+import { FontSizes, Spacing } from '../../constants';
 
 export interface FormFieldProps {
   name: string;
@@ -17,7 +18,12 @@ export function FormField({
       {() => (
         <>
           {children}
-          <Label color="error">{meta.error}</Label>
+          <Label
+            styles={{ marginTop: Spacing.SM }}
+            fontSize={FontSizes.SM}
+            color="error">
+            {meta.error}
+          </Label>
         </>
       )}
     </Field>
