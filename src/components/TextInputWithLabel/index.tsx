@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { View, ViewStyle, TextInput, TextInputProps } from 'react-native';
-import { FontSizes } from '../../constants';
+import { FontSizes, Spacing } from '../../constants';
 import { useTheme } from '../../hooks';
 import { Label } from '../../ui';
 
@@ -31,9 +31,11 @@ export const TextInputWithlabel: React.FC<TextInputWithlabelProps> = ({
         <TextInput
           {...textInputProps}
           style={{
+            marginTop: Spacing.SM,
             fontSize: FontSizes.MD,
             fontFamily: 'AtkinsonHyperlegible-Regular',
             color: grey,
+            width: '100%',
           }}
         />
       )}
