@@ -27,6 +27,8 @@ export const extendedDarkThemeColors = {
   white: '#fff',
   black: '#000',
   error: '#FF2626',
+  yellow: '#FFE459',
+  pink: '#F43B86',
 };
 
 export const extendedLightThemeColors = {
@@ -36,4 +38,6 @@ export const extendedLightThemeColors = {
   white: '#fff',
   black: '#000',
   error: '#FF2626',
+  yellow: '#FFE459',
+  pink: '#F43B86',
 };
