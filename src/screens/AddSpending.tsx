@@ -1,69 +1,153 @@
 import React from 'react';
-import { View, StyleSheet, TextInput } from 'react-native';
-import { useState } from 'react';
-import { FontSizes, Spacing, extendedLightThemeColors } from '../constants';
-import { SpendingCategoryInput } from '../components/SpendingCategoryInput';
+import {
+  View,
+  StyleSheet,
+  KeyboardAvoidingView,
+  ActivityIndicator,
+} from 'react-native';
+import { Formik } from 'formik';
+import { FontSizes, Spacing } from '../constants';
 import { InputWithAccessory } from '../components/InputWithAccessory';
+import {
+  TextInputWithlabel,
+  Button,
+  FormField,
+  DismissKeyboard,
+} from '../components';
+import { Label } from '../ui';
+import { useTheme } from '../hooks';
+import { SpendingsBrain } from '../services';
 
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    paddingVertical: 80,
-    paddingHorizontal: Spacing.MD,
   },
 });
 
 export function AddSpending() {
-  // const [step, setStep] = useState(0);
-  const [price, setPrice] = useState<number | undefined>(undefined);
-  const [purpose, setPurpose] = useState('');
-  const [activeEmojiIndex, setActiveEmojiIndex] = useState(0);
+  const {
+    colors: { grey, primary },
+  } = useTheme();
 
   return (
-    <View style={styles.screen}>
-      <View style={{ flex: 1, alignItems: 'center' }}>
-        <SpendingCategoryInput
-          active={activeEmojiIndex}
-          setActive={setActiveEmojiIndex}
-        />
-        <TextInput
-          value={purpose}
-          onChangeText={(text) => setPurpose(text)}
-          placeholder="Restaurant Takeout"
+    <KeyboardAvoidingView behavior="padding" style={styles.screen}>
+      <DismissKeyboard>
+        <View
           style={{
-            marginTop: Spacing.XL,
-            fontSize: FontSizes.THREEXL,
-            fontWeight: 'bold',
-          }}
-        />
+            flex: 1,
+            paddingTop: Spacing.XL,
+            paddingBottom: Spacing.XL * 2,
+            paddingHorizontal: Spacing.MD,
+          }}>
+          <View style={{ alignItems: 'center', marginBottom: Spacing.XL }}>
+            <Label fontSize={FontSizes.XL} fontWeight="bold">
+              New Expense
+            </Label>
+          </View>
+          <Formik
+            initialValues={{ expenseName: '', amount: 0 }}
+            validate={(values) => {
+              const errors: { amount?: string; expenseName?: string } = {};
 
-        <View style={{ marginTop: Spacing.XL * 4 }}>
-          <InputWithAccessory
-            accessoryText="$"
-            accessoryFontSize={FontSizes.FIVEXL}
-            style={{ fontSize: FontSizes.FIVEXL + 2 }}
-            onChangeText={(text) => {
-              if (!text) {
-                setPrice(undefined);
-                return;
+              if (!values.amount) {
+                errors.amount = 'Provide an amount';
               }
-              const converted = Number(text);
-              if (typeof converted === 'number' && !Number.isNaN(converted)) {
-                setPrice(converted);
-              } else {
-                setPrice(undefined);
+
+              if (!values.expenseName) {
+                errors.expenseName = 'Provide expense name';
               }
+
+              return errors;
             }}
-            value={typeof price === 'number' ? String(price) : undefined}
-            placeholder="0"
-            placeholderTextColor={extendedLightThemeColors.grey}
-            keyboardType="numeric"
-            returnKeyType="done"
-          />
+            onSubmit={async (values) => {
+              await SpendingsBrain.shared.addExpense({
+                createdAt: new Date(),
+                amount: values.amount,
+                name: values.expenseName,
+              });
+            }}>
+            {({
+              handleChange,
+              handleBlur,
+              setFieldValue,
+              values,
+              handleSubmit,
+              isSubmitting,
+            }) => (
+              <View
+                style={{
+                  flex: 1,
+                  justifyContent: 'space-between',
+                }}>
+                <View style={{ flex: 1 }}>
+                  <FormField name="expenseName">
+                    <TextInputWithlabel
+                      labelText="What did you spend your money on?"
+                      placeholder="Groceries"
+                      value={values.expenseName}
+                      onBlur={handleBlur('expenseName')}
+                      onChangeText={handleChange('expenseName')}
+                    />
+                  </FormField>
+
+                  <FormField name="amount">
+                    <TextInputWithlabel
+                      styles={{ marginTop: Spacing.SM }}
+                      labelText="How much did you spend?"
+                      renderInputComponent={() => {
+                        return (
+                          <InputWithAccessory
+                            style={{
+                              marginTop: Spacing.SM,
+                              fontSize: FontSizes.MD,
+                              fontFamily: 'AtkinsonHyperlegible-Regular',
+                              color: grey,
+                              width: '100%',
+                            }}
+                            value={
+                              typeof values.amount === 'number'
+                                ? String(values.amount)
+                                : undefined
+                            }
+                            onChangeText={(text) => {
+                              if (!text) {
+                                setFieldValue('amount', 0, false);
+                                return;
+                              }
+                              const converted = Number(text);
+                              if (
+                                typeof converted === 'number' &&
+                                !Number.isNaN(converted)
+                              ) {
+                                setFieldValue('amount', converted, true);
+                              } else {
+                                setFieldValue('amount', 0, true);
+                              }
+                            }}
+                            keyboardType="numeric"
+                            returnKeyType="done"
+                          />
+                        );
+                      }}
+                    />
+                  </FormField>
+                </View>
+
+                <Button
+                  rounded
+                  labelProps={{ fontSize: FontSizes.LG, color: 'white' }}
+                  renderLeftItem={() => {
+                    return <>{isSubmitting && <ActivityIndicator />}</>;
+                  }}
+                  styles={{ backgroundColor: primary }}
+                  onPress={handleSubmit}>
+                  Save
+                </Button>
+              </View>
+            )}
+          </Formik>
         </View>
-      </View>
-    </View>
+      </DismissKeyboard>
+    </KeyboardAvoidingView>
   );
 }
