@@ -1,2 +1,2 @@
 export * from './useTheme';
-export * from './useSpendings';
+export * from './useExpenses';
