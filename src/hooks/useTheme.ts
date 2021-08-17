@@ -3,6 +3,7 @@ import {
   extendedDarkThemeColors,
   extendedLightThemeColors,
 } from '../constants';
+import { Theme } from '../types';
 
 export function useTheme(): Theme {
   const theme = useThemeLib();

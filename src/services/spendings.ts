@@ -4,6 +4,8 @@ import { v4 as uuidv4 } from 'uuid';
 import { StorageKeys } from '../constants';
 import { expensesState } from '../states';
 
+import { Expense } from '../types';
+
 interface SpendingsBrainAPI {
   getSpendings(): Promise<Array<Expense>>;
 }
@@ -39,7 +41,7 @@ export class SpendingsBrain implements SpendingsBrainAPI {
       createdAt: new Date(d.createdAt),
     }));
 
-    data = data.sort((a, b) => a.createdAt.getTime() - b.createdAt.getTime());
+    data = data.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
 
     if (data && shouldPopulateState) {
       expensesState.expenses = data;

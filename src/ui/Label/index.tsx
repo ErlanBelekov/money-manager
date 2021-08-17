@@ -6,6 +6,8 @@ import { Text } from 'react-native';
 import { FontSizes } from '../../constants';
 import { useTheme } from '../../hooks';
 
+import { ThemeColor } from '../../types';
+
 type FontFamily = 'body';
 
 type FontWeight = 'bold' | 'normal';

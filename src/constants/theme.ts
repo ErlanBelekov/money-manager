@@ -4,6 +4,9 @@ export const darkTheme: Theme = {
   dark: true,
   colors: {
     ...DefaultTheme.colors,
+    // background: '#11052C',
+    // primary: '#3D087B',
+    // text: '#fff',
     background: '#11052C',
     primary: '#3D087B',
     text: '#fff',
@@ -23,6 +26,8 @@ export const lightTheme: Theme = {
 export const extendedDarkThemeColors = {
   textPrimary: '#fff',
   textSecondary: '#fff',
+  backgroundSecondary: '#1f1140',
+  accent: '#F43B86',
   grey: '#999ca9',
   white: '#fff',
   black: '#000',
@@ -34,6 +39,8 @@ export const extendedDarkThemeColors = {
 export const extendedLightThemeColors = {
   textPrimary: '#000',
   textSecondary: '#000',
+  backgroundSecondary: '#5c10b5',
+  accent: '#F43B86',
   grey: '#999ca9',
   white: '#fff',
   black: '#000',

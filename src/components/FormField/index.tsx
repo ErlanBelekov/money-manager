@@ -20,7 +20,7 @@ export function FormField({
           {children}
           <Label
             styles={{ marginTop: Spacing.SM }}
-            fontSize={FontSizes.SM}
+            fontSize={FontSizes.MD}
             color="error">
             {meta.error}
           </Label>

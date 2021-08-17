@@ -1,6 +1,7 @@
 import React, { ReactNode } from 'react';
 import { Image, Pressable, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useColorScheme } from 'react-native';
 import { DrawerNavigationProp } from '@react-navigation/drawer';
 import { useNavigation } from '@react-navigation/core';
 
@@ -20,6 +21,8 @@ export function Header({ title, renderRightItems }: HeaderProps) {
   } = useTheme();
 
   const navigation = useNavigation<DrawerNavigationProp<any>>();
+
+  const colorScheme = useColorScheme();
 
   const { top } = useSafeAreaInsets();
 
@@ -41,7 +44,11 @@ export function Header({ title, renderRightItems }: HeaderProps) {
       <Pressable onPress={onMenuPress}>
         <Image
           source={menuIcon}
-          style={{ height: FontSizes.THREEXL, width: FontSizes.THREEXL }}
+          style={{
+            height: FontSizes.THREEXL,
+            width: FontSizes.THREEXL,
+            tintColor: colorScheme === 'dark' ? 'white' : '#000',
+          }}
         />
       </Pressable>
       <Label

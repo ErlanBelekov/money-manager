@@ -2,6 +2,7 @@ import React, { PropsWithChildren, ReactNode } from 'react';
 import { Pressable, PressableProps, View, ViewStyle } from 'react-native';
 import { Spacing } from '../../constants';
 import { Label, LabelProps } from '../../ui';
+import { ThemeColor } from '../../types';
 
 export interface ButtonProps extends PressableProps {
   rounded?: boolean;
