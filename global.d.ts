@@ -2,10 +2,20 @@ declare interface Identifiable {
   readonly id: string;
 }
 
+declare type ExpenseCategory =
+  | 'OTHER'
+  | 'FOOD'
+  | 'AMUSEMENT'
+  | 'HOME'
+  | 'TRANSPORT'
+  | 'BEAUTY'
+  | 'CLOTHING';
+
 declare interface Expense extends Identifiable {
   readonly name: string;
   readonly createdAt: Date;
   readonly amount: number;
+  readonly category?: ExpenseCategory;
 }
 
 declare type SpendingCategory =
