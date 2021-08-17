@@ -1,12 +1,13 @@
 import React from 'react';
-import {
-  View,
-  StyleSheet,
-  KeyboardAvoidingView,
-  ActivityIndicator,
-} from 'react-native';
+import { View, StyleSheet, KeyboardAvoidingView } from 'react-native';
 import { Formik } from 'formik';
-import { FontSizes, Spacing } from '../constants';
+import { useNavigation } from '@react-navigation/native';
+import {
+  expenseCategories,
+  FontSizes,
+  Spacing,
+  categoryNamesDict,
+} from '../constants';
 import { InputWithAccessory } from '../components/InputWithAccessory';
 import {
   TextInputWithlabel,
@@ -14,9 +15,10 @@ import {
   FormField,
   DismissKeyboard,
 } from '../components';
-import { Label } from '../ui';
+import { Label, Tag } from '../ui';
 import { useTheme } from '../hooks';
 import { SpendingsBrain } from '../services';
+import { ExpenseCategory, ExpenseCategoryKey } from '../types';
 
 const styles = StyleSheet.create({
   screen: {
@@ -24,10 +26,33 @@ const styles = StyleSheet.create({
   },
 });
 
+interface FormValues {
+  amount: number;
+  expenseName?: string;
+  category?: ExpenseCategory;
+}
+
 export function AddSpending() {
   const {
     colors: { grey, primary },
   } = useTheme();
+
+  const onTagPress = (
+    tag: ExpenseCategoryKey,
+    setFieldValue: Function,
+    currentValue: ExpenseCategory | undefined
+  ) => {
+    if (currentValue) {
+      setFieldValue('category', '', false);
+      if (currentValue !== tag) {
+        setFieldValue('category', tag, false);
+      }
+    } else {
+      setFieldValue('category', tag, false);
+    }
+  };
+
+  const { goBack } = useNavigation();
 
   return (
     <KeyboardAvoidingView behavior="padding" style={styles.screen}>
@@ -44,10 +69,18 @@ export function AddSpending() {
               New Expense
             </Label>
           </View>
-          <Formik
-            initialValues={{ expenseName: '', amount: 0 }}
+          <Formik<FormValues>
+            initialValues={{
+              expenseName: '',
+              amount: 0,
+              category: '' as ExpenseCategory,
+            }}
             validate={(values) => {
-              const errors: { amount?: string; expenseName?: string } = {};
+              const errors: {
+                amount?: string;
+                expenseName?: string;
+                category?: string;
+              } = {};
 
               if (!values.amount) {
                 errors.amount = 'Provide an amount';
@@ -57,14 +90,22 @@ export function AddSpending() {
                 errors.expenseName = 'Provide expense name';
               }
 
+              if (!values.category) {
+                errors.category = 'Pick a category';
+              }
+
               return errors;
             }}
             onSubmit={async (values) => {
-              await SpendingsBrain.shared.addExpense({
-                createdAt: new Date(),
-                amount: values.amount,
-                name: values.expenseName,
-              });
+              if (values.expenseName && values.category) {
+                await SpendingsBrain.shared.addExpense({
+                  createdAt: new Date(),
+                  amount: values.amount,
+                  name: values.expenseName,
+                  category: values.category,
+                });
+                goBack();
+              }
             }}>
             {({
               handleChange,
@@ -72,7 +113,6 @@ export function AddSpending() {
               setFieldValue,
               values,
               handleSubmit,
-              isSubmitting,
             }) => (
               <View
                 style={{
@@ -131,14 +171,47 @@ export function AddSpending() {
                       }}
                     />
                   </FormField>
+
+                  <FormField name="category">
+                    <TextInputWithlabel
+                      styles={{ marginTop: Spacing.SM }}
+                      labelText="What is the type of expense?"
+                      renderInputComponent={() => {
+                        return (
+                          <View
+                            style={{
+                              marginTop: Spacing.MD,
+                              flexDirection: 'row',
+                              flexWrap: 'wrap',
+                            }}>
+                            {expenseCategories.map((x) => (
+                              <Tag
+                                key={x}
+                                text={categoryNamesDict[x]}
+                                onPress={() =>
+                                  onTagPress(x, setFieldValue, values.category)
+                                }
+                                styles={{
+                                  margin: Spacing.XS,
+                                  backgroundColor: grey,
+                                  ...(values.category === x
+                                    ? {
+                                        backgroundColor: primary,
+                                      }
+                                    : {}),
+                                }}
+                              />
+                            ))}
+                          </View>
+                        );
+                      }}
+                    />
+                  </FormField>
                 </View>
 
                 <Button
                   rounded
                   labelProps={{ fontSize: FontSizes.LG, color: 'white' }}
-                  renderLeftItem={() => {
-                    return <>{isSubmitting && <ActivityIndicator />}</>;
-                  }}
                   styles={{ backgroundColor: primary }}
                   onPress={handleSubmit}>
                   Save
