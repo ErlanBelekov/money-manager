@@ -9,6 +9,7 @@ import { useTheme, useExpenses } from '../hooks';
 
 import { FontSizes, Spacing } from '../constants';
 import { Label } from '../ui';
+import { useMemo } from 'react';
 
 function SpendingsSeparator() {
   return <View style={{ height: Spacing.LG }} />;
@@ -29,12 +30,29 @@ export function HomeScreen() {
 
   console.log('current expenses: \n', expenses);
 
-  const testSections = [
-    {
-      title: 'Today',
-      data: expenses,
-    },
-  ];
+  const montlyExpensesSections = useMemo<
+    { title: string; data: Expense[] }[]
+  >(() => {
+    let result: { title: string; data: Expense[] }[] = [];
+    const expensesByDays: { [day: number]: Expense[] } = {};
+
+    expenses.forEach((exp) => {
+      const k = exp.createdAt.getDate();
+      if (expensesByDays[k] && Array.isArray(expensesByDays[k])) {
+        expensesByDays[k] = [...expensesByDays[k], exp];
+      } else {
+        expensesByDays[k] = [exp];
+      }
+    });
+
+    for (const exps in expensesByDays) {
+      if (expensesByDays.hasOwnProperty(exps)) {
+        result = [...result, { title: exps, data: expensesByDays[exps] }];
+      }
+    }
+
+    return result;
+  }, [expenses]);
 
   const renderSpending = ({ item }: { item: Expense }) => {
     return (
@@ -73,7 +91,7 @@ export function HomeScreen() {
         }}
       />
       <SectionList
-        sections={testSections}
+        sections={montlyExpensesSections}
         keyExtractor={(item, index) => String(index)}
         renderSectionHeader={({ section: { title, key } }) => {
           return (
