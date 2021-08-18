@@ -68,11 +68,11 @@ export function HomeScreen() {
       }
     });
 
-    for (const exps in expensesByDays) {
-      if (expensesByDays.hasOwnProperty(exps)) {
-        result = [...result, { title: exps, data: expensesByDays[exps] }];
-      }
-    }
+    Object.keys(expensesByDays)
+      .reverse()
+      .forEach((day: string) => {
+        result = [...result, { title: day, data: expensesByDays[Number(day)] }];
+      });
 
     return result;
   }, [expenses]);
