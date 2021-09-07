@@ -17,7 +17,7 @@ export const lightTheme: Theme = {
   dark: false,
   colors: {
     ...DefaultTheme.colors,
-    background: '#fff',
+    background: '#f2f2f7',
     primary: '#3D087B',
     text: '#000',
   },
@@ -26,7 +26,7 @@ export const lightTheme: Theme = {
 export const extendedDarkThemeColors = {
   textPrimary: '#fff',
   textSecondary: '#fff',
-  backgroundSecondary: '#1f1140',
+  backgroundSecondary: '#1f1140', // #f2f2f7
   accent: '#F43B86',
   grey: '#999ca9',
   white: '#fff',

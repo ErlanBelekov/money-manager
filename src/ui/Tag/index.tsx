@@ -25,7 +25,8 @@ export const Tag = ({
     <Pressable
       style={{
         backgroundColor: bgColor,
-        padding: Spacing.MD,
+        paddingHorizontal: Spacing.MD,
+        paddingVertical: Spacing.XS,
         borderRadius: Spacing.SM,
         ...styles,
       }}

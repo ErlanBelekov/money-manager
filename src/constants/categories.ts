@@ -18,7 +18,7 @@ export const categoryNamesDict: { [key: string]: string } = {
   [ExpenseCategory.OTHER]: '💩 Other',
 };
 
-export const expenseCategoriesSigns: { [key: string]: string } = {
+export const expenseCategoriesSigns: Record<ExpenseCategory, string> = {
   [ExpenseCategory.FOOD]: '🍣',
   [ExpenseCategory.FUN]: '🦄',
   [ExpenseCategory.TRANSPORTATION]: '🚌',
